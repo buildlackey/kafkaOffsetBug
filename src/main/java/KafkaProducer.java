@@ -1,11 +1,12 @@
 import kafka.admin.AdminUtils;
+import kafka.admin.RackAwareMode;
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
 import kafka.server.KafkaConfig;
 import kafka.server.KafkaServer;
-import kafka.utils.SystemTime$;
 import kafka.utils.ZKStringSerializer$;
+import kafka.utils.ZkUtils;
 import org.I0Itec.zkclient.ZkClient;
 
 import java.io.File;
@@ -64,7 +65,8 @@ public class KafkaProducer {
             int noOfReplication = 1;
             Properties topicConfiguration = new Properties();
 
-            AdminUtils.createTopic(zkClient, topicName, noOfPartitions, noOfReplication, topicConfiguration);
+            ZkUtils zkUtils = ZkUtils.apply(zkClient, false);
+            AdminUtils.createTopic(zkUtils , topicName, noOfPartitions, noOfReplication, topicConfiguration, RackAwareMode.Disabled$.MODULE$);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

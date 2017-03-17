@@ -6,12 +6,16 @@ lazy val commonSettings = Seq(
 
 libraryDependencies ++= {
   	Seq(
-  	    "org.apache.kafka" % "kafka_2.10" % "0.8.2.1" 
+  	    "org.apache.kafka" % "kafka_2.11" % "0.10.2.0"
   	)
 }
 
 resolvers ++= Seq("snapshots"     at "http://oss.sonatype.org/content/repositories/snapshots",
                 "releases"        at "http://oss.sonatype.org/content/repositories/releases"
                 )
- 
+
+
+
 scalacOptions ++= Seq("-unchecked", "-deprecation")
+
+scalaVersion := "2.11.6"
